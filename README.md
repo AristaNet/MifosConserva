@@ -15,7 +15,9 @@ for installing node, go to the official page https://nodejs.org/
 
 #### angular-cli
 for installing angular-cli, execute this command:
+
 > npm install -g @angular/cli
+
 official page: https://cli.angular.io/
 
 
