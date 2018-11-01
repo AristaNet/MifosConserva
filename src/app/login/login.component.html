@@ -1,0 +1,35 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isLogin"></mat-progress-bar>
+<div id="login-content" fxLayout fxLayoutAlign="space-around center">
+
+  <div fxFlex.xs="80%" fxFlex.sm="40%" fxFlex.md="30%" fxFlex.lg="25%" class="text-center">
+    <img src="https://moviltech.mx/img/logo.svg" id="logo-login">
+  
+    <form [formGroup]="loginForm" (submit)="login()" novalidate>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="text" placeholder="ejemplo: correo@email.com" formControlName="email" required>
+        <mat-error *ngIf="loginForm.get('email')?.errors?.isEmail">No es un correo</mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.errors?.required">Este campo es requerido</mat-error>
+      </mat-form-field>
+      
+      <br>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [type]="isShowingPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName="password">
+        <button matSuffix mat-icon-button type="button" *ngIf="loginForm.get('password').value" (click)="showPassword()">
+            <mat-icon>{{ isShowingPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.errors?.required">Este campo es requerido</mat-error>
+      </mat-form-field>
+  
+      <br><br>
+  
+      <button mat-raised-button color="primary" [disabled]="isLogin">
+        Iniciar sessión
+      </button>
+    </form>
+  </div>
+
+</div>
