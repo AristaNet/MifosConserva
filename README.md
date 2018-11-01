@@ -6,6 +6,27 @@ Client that shares with mifos X platform, this is only an improve of some funcio
 
 # Configuration and deployment
 
+
+## Prerequisites
+You need to have this environment configuration on your computer:
+
+#### node 8.xx > or higher (npm is installed with node)
+for installing node, go to the official page https://nodejs.org/
+
+#### angular-cli
+for installing angular-cli, execute this command:
+> npm install -g @angular/cli
+official page: https://cli.angular.io/
+
+
+## Install dependencies
+If it's the first time that you clone the project, you need to install the dependencies of the project. You must run this command in the root:
+
+> npm install
+
+After of that, you'll be able to run the others commands
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
