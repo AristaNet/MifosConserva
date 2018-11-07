@@ -14,7 +14,8 @@ import {
   MatRadioModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 // Pipes
@@ -36,7 +37,8 @@ import { FormClientComponent } from './form-client.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    ErrorMessageModule
+    ErrorMessageModule,
+    MatCheckboxModule
   ],
   declarations: [
     FormClientComponent

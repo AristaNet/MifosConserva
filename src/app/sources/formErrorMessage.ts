@@ -5,6 +5,10 @@ export const errorMessage = {
     required: 'Este campo es requerido',
     requiredTrim: 'Este campo es requerido',
     maxlength: `Excede el número máximo de {*} caracteres`,
-    minlength: `Mínimo número de {*} caracteres requerido`,
-    isNumber: 'Tiene que ser numérico'
+    minlength: `Número mínimo de {*} caracteres requerido`,
+    isNumber: 'Tiene que ser numérico',
+    isPhone: 'Tiene que ser un número válido',
+    greaterThan: 'Tiene que ser mayor a {*}',
+    lessThan: 'Tiene que ser menor a {*}',
+    pattern: 'El formato de {*} no es válido'
 };

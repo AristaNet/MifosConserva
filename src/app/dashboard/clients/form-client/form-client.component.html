@@ -1,383 +1,772 @@
 <form [formGroup]="formClient" (submit)="submit()" novalidate>
-  <mat-vertical-stepper (selectionChange)="stepperChanges($event)">
+  <mat-vertical-stepper #clientStepper>
 
-    <mat-step formGroupName="personalData" [stepControl]="formClient.get('personalData')" errorMessage="Los datos personales incompletos">
+    <mat-step formGroupName="personalData" [stepControl]="formPersonalData" errorMessage="Datos personales incompletos">
       <ng-template matStepLabel> 
         <b>Datos personales</b>
       </ng-template>
 
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
-          <mat-label>Nombre</mat-label>
-          <input matInput type="text" placeholder="Nombre" formControlName="firstname" required>
-          <mat-error *ngIf="formPersonalData.get('firstname').invalid">
-            {{ formPersonalData.get('firstname').errors | errorMessage: errorDict : { maxlength: [50] } }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
-          <mat-label>Apellido paterno</mat-label>
-          <input matInput type="text" placeholder="Apellido paterno" formControlName="pLastname" required>
-          <mat-error *ngIf="formPersonalData.get('pLastname').invalid">
-            {{ formPersonalData.get('pLastname').errors | errorMessage: errorDict : { maxlength: [50] } }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
-          <mat-label>Apellido materno</mat-label>
-          <input matInput type="text" placeholder="Apellido materno" formControlName="mLastname" required>
-          <mat-error *ngIf="formPersonalData.get('mLastname').invalid">
-            {{ formPersonalData.get('mLastname').errors | errorMessage: errorDict : { maxlength: [50] } }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
-          <mat-select placeholder="Género" formControlName="gender" required>
-            <mat-option value="1">Hombre</mat-option>
-            <mat-option value="2">Mujer</mat-option>
-          </mat-select>
-          <mat-error *ngIf="formPersonalData.get('gender').invalid">
-            {{ formPersonalData.get('gender').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
-          <mat-select placeholder="Estado civil" formControlName="maritalStatus" required>
-            <mat-option value="1">Casado</mat-option>
-            <mat-option value="2">Soltero</mat-option>
-          </mat-select>
-          <mat-error *ngIf="formPersonalData.get('maritalStatus').invalid">
-            {{ formPersonalData.get('maritalStatus').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
-          <mat-select placeholder="Escolaridad" formControlName="scholarship">
-            <mat-option value="H">Primaria</mat-option>
-            <mat-option value="M">Secundaria</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
-          <mat-select placeholder="Profesión" formControlName="profession">
-            <mat-option value="H">Web developer</mat-option>
-            <mat-option value="M">Abogado</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="40">
-          <mat-label>Clave de elector</mat-label>
-          <input matInput type="text" placeholder="Clave de elector" formControlName="electorKey">
-          <mat-error *ngIf="formPersonalData.get('electorKey').invalid">
-            {{ formPersonalData.get('electorKey').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="40">
-          <mat-label>C.U.R.P</mat-label>
-          <input matInput type="text" placeholder="C.U.R.P" formControlName="curp" required>
-          <mat-error *ngIf="formPersonalData.get('curp').invalid">
-            {{ formPersonalData.get('curp').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="40">
-          <mat-label>R.F.C</mat-label>
-          <input matInput type="text" placeholder="R.F.C (Con homoclave)" formControlName="rfc" required>
-          <mat-error *ngIf="formPersonalData.get('rfc').invalid">
-            {{ formPersonalData.get('rfc').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
-          <mat-label>Serie de firma electrónica</mat-label>
-          <input matInput type="text" placeholder="Serie de firma electrónica (cuando disponga de ella)" formControlName="electronicSignature">
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
-          <mat-label>ID de familia prospera</mat-label>
-          <input matInput type="text" placeholder="ID de familia prospera (sólo para las que aplique)" formControlName="IDProspera">
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
-          <mat-label>Fecha de nacimiento</mat-label>
-          <input matInput [matDatepicker]="birthday" placeholder="Fecha de nacimiento" formControlName="birthday" required>
-          <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
-          <mat-datepicker #birthday disabled="false"></mat-datepicker>
-          <mat-error *ngIf="formPersonalData.get('birthday').invalid">
-            {{ formPersonalData.get('birthday').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
-          <mat-label>País y entidad de nacimiento</mat-label>
-          <input matInput type="text" placeholder="País y entidad de nacimiento" formControlName="birthdayEntity">
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
-          <mat-label>Fecha de solicitud</mat-label>
-          <input matInput [matDatepicker]="requestDate" placeholder="Fecha de solicitud" formControlName="requestDate" required>
-          <mat-datepicker-toggle matSuffix [for]="requestDate"></mat-datepicker-toggle>
-          <mat-datepicker #requestDate disabled="false"></mat-datepicker>
-          <mat-error *ngIf="formPersonalData.get('requestDate').invalid">
-            {{ formPersonalData.get('requestDate').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
-          <mat-label>Número de dependientes</mat-label>
-          <input matInput type="text" placeholder="Número de dependientes" formControlName="numberDependents">
-          <mat-error *ngIf="formPersonalData.get('numberDependents').invalid">
-            {{ formPersonalData.get('numberDependents').errors | errorMessage: errorDict }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="text-center">
-        <br>
-        ¿Desempeña un cargo público o lo tuvo en los últimos 12 meses a la fecha?
-        <br><br>
-        <mat-radio-group fxLayout fxLayoutAlign="space-evenly">
-          <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
-          <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
-        </mat-radio-group>
-
-        <br><br>
-
-        ¿Algún familiar ha desarrollado en los últimos 12 meses alguna función pública en el país o el extranjero?
-        <br><br>
-        <mat-radio-group fxLayout fxLayoutAlign="space-evenly">
-          <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
-          <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
-        </mat-radio-group>
-
-        <div *ngIf="true">
-          <br><br>
-
-          <mat-form-field class="full-width">
-            <mat-label>Especifica el cargo</mat-label>
-            <input matInput type="text" placeholder="Especifica el cargo" required>
-            <mat-error *ngIf="false">No es un correo</mat-error>
+      <!-- La condicion ngIf es importante para el performance de carga del formulario al iniciar la aplicacion y el performance del flexbox -->
+      <div *ngIf="clientStepper.selectedIndex == 0">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" placeholder="Nombre" formControlName="firstname" required>
+            <mat-error *ngIf="formPersonalData.get('firstname').invalid">
+              {{ formPersonalData.get('firstname').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
+            <mat-label>Apellido paterno</mat-label>
+            <input matInput type="text" placeholder="Apellido paterno" formControlName="pLastname" required>
+            <mat-error *ngIf="formPersonalData.get('pLastname').invalid">
+              {{ formPersonalData.get('pLastname').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
+            <mat-label>Apellido materno</mat-label>
+            <input matInput type="text" placeholder="Apellido materno" formControlName="mLastname" required>
+            <mat-error *ngIf="formPersonalData.get('mLastname').invalid">
+              {{ formPersonalData.get('mLastname').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
           </mat-form-field>
         </div>
-
-        <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
-          <div fxFlex.xs="100%">
-            <br><br>
-            ¿Habla alguna lengua indígena?
-            <br><br>
-            <mat-radio-group fxLayout fxLayoutAlign="space-evenly">
-              <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
-              <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
-            </mat-radio-group>
-          </div>
-          <div fxFlex.xs="100%">
-            <br><br>
-            ¿Padece de alguna discapacidad?
-            <br><br>
-            <mat-radio-group fxLayout fxLayoutAlign="space-evenly">
-              <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
-              <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
-            </mat-radio-group>
-          </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
+            <mat-select placeholder="Género" formControlName="gender" required>
+              <mat-option value="1">Hombre</mat-option>
+              <mat-option value="2">Mujer</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formPersonalData.get('gender').invalid">
+              {{ formPersonalData.get('gender').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
+            <mat-select placeholder="Estado civil" formControlName="maritalStatus" required>
+              <mat-option value="1">Casado</mat-option>
+              <mat-option value="2">Soltero</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formPersonalData.get('maritalStatus').invalid">
+              {{ formPersonalData.get('maritalStatus').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
+            <mat-select placeholder="Escolaridad" formControlName="scholarship">
+              <mat-option value="H">Primaria</mat-option>
+              <mat-option value="M">Secundaria</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(20.5% - 15px)">
+            <mat-select placeholder="Profesión" formControlName="profession">
+              <mat-option value="H">Web developer</mat-option>
+              <mat-option value="M">Abogado</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-
-        <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
-          <div fxFlex.xs="100%">
-            <br><br>
-            ¿Cuenta con acceso a internet?
-            <br><br>
-            <mat-radio-group fxLayout fxLayoutAlign="space-evenly">
-              <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
-              <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
-            </mat-radio-group>
-          </div>
-          <div fxFlex.xs="100%">
-            <br><br>
-            ¿Es usuario de redes sociales?
-            <br><br>
-            <mat-radio-group fxLayout fxLayoutAlign="space-evenly">
-              <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
-              <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
-            </mat-radio-group>
-          </div>
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="40">
+            <mat-label>Clave de elector</mat-label>
+            <input matInput type="text" placeholder="Clave de elector" formControlName="electorKey">
+            <mat-error *ngIf="formPersonalData.get('electorKey').invalid">
+              {{ formPersonalData.get('electorKey').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="40">
+            <mat-label>C.U.R.P</mat-label>
+            <input matInput type="text" placeholder="C.U.R.P" formControlName="curp" required>
+            <mat-error *ngIf="formPersonalData.get('curp').invalid">
+              {{ formPersonalData.get('curp').errors | errorMessage: errorDict : { pattern: ['la CURP'] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="40">
+            <mat-label>R.F.C</mat-label>
+            <input matInput type="text" placeholder="R.F.C (Con homoclave)" formControlName="rfc" required>
+            <mat-error *ngIf="formPersonalData.get('rfc').invalid">
+              {{ formPersonalData.get('rfc').errors | errorMessage: errorDict : { pattern: ['el RFC'] } }}
+            </mat-error>
+          </mat-form-field>
         </div>
-
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>Serie de firma electrónica</mat-label>
+            <input matInput type="text" placeholder="Serie de firma electrónica (cuando disponga de ella)" formControlName="electronicSignature">
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>ID de familia prospera</mat-label>
+            <input matInput type="text" placeholder="ID de familia prospera (sólo para las que aplique)" formControlName="IDProspera">
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput [matDatepicker]="birthday" placeholder="Fecha de nacimiento" formControlName="birthday" required>
+            <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
+            <mat-datepicker #birthday disabled="false"></mat-datepicker>
+            <mat-error *ngIf="formPersonalData.get('birthday').invalid">
+              {{ formPersonalData.get('birthday').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>País y entidad de nacimiento</mat-label>
+            <input matInput type="text" placeholder="País y entidad de nacimiento" formControlName="birthdayEntity">
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>Fecha de solicitud</mat-label>
+            <input matInput [matDatepicker]="requestDate" placeholder="Fecha de solicitud" formControlName="requestDate" required>
+            <mat-datepicker-toggle matSuffix [for]="requestDate"></mat-datepicker-toggle>
+            <mat-datepicker #requestDate disabled="false"></mat-datepicker>
+            <mat-error *ngIf="formPersonalData.get('requestDate').invalid">
+              {{ formPersonalData.get('requestDate').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>Número de dependientes</mat-label>
+            <input matInput type="text" placeholder="Número de dependientes" formControlName="numberDependents">
+            <mat-error *ngIf="formPersonalData.get('numberDependents').invalid">
+              {{ formPersonalData.get('numberDependents').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
         <div class="text-center">
+          <br>
+          ¿Desempeña un cargo público o lo tuvo en los últimos 12 meses a la fecha?
           <br><br>
-          <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+          <mat-radio-group fxLayout fxLayoutAlign="space-evenly" formControlName="hasPublicCharge">
+            <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
+            <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+  
+          <br><br>
+  
+          ¿Algún familiar ha desarrollado en los últimos 12 meses alguna función pública en el país o el extranjero?
+          <br><br>
+          <mat-radio-group fxLayout fxLayoutAlign="space-evenly" formControlName="familyHasPublicFunction">
+            <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
+            <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+  
+          <div *ngIf="formPersonalData.get('familyHasPublicFunction').value">
+            <br><br>
+  
+            <mat-form-field class="full-width">
+              <mat-label>Especifica el cargo</mat-label>
+              <input matInput type="text" placeholder="Especifica el cargo" formControlName="publicFunctionSpecification" required>
+            </mat-form-field>
+          </div>
+  
+          <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
+            <div fxFlex.xs="100%">
+              <br><br>
+              ¿Habla alguna lengua indígena?
+              <br><br>
+              <mat-radio-group fxLayout fxLayoutAlign="space-evenly" formControlName="speakNativeLanguage">
+                <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div fxFlex.xs="100%">
+              <br><br>
+              ¿Padece de alguna discapacidad?
+              <br><br>
+              <mat-radio-group fxLayout fxLayoutAlign="space-evenly" formControlName="hasDisabilities">
+                <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+  
+          <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
+            <div fxFlex.xs="100%">
+              <br><br>
+              ¿Cuenta con acceso a internet?
+              <br><br>
+              <mat-radio-group fxLayout fxLayoutAlign="space-evenly" formControlName="hasInternet">
+                <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div fxFlex.xs="100%">
+              <br><br>
+              ¿Es usuario de redes sociales?
+              <br><br>
+              <mat-radio-group fxLayout fxLayoutAlign="space-evenly" formControlName="useSocialNetworks">
+                <mat-radio-button color="primary" [value]="true">Sí</mat-radio-button>
+                <mat-radio-button color="primary" [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+  
+          <div class="text-center">
+            <br><br>
+            <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+          </div>
+  
         </div>
-
       </div>
-
 
     </mat-step>
 
-    <mat-step>
+    <mat-step formGroupName="addressData" [stepControl]="formAddressData" errorMessage="Datos de dirección incompletos">
       <ng-template matStepLabel> 
         <b>Datos del domicilio</b>
       </ng-template>
 
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex="100%">
-          <mat-label>Dirección del hogar</mat-label>
-          <input matInput type="text" placeholder="Dirección del hogar" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
-          <mat-label>Número exterior</mat-label>
-          <input matInput type="number" placeholder="Número exterior" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
-          <mat-label>Número interior</mat-label>
-          <input matInput type="number" placeholder="Número interior" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)" fxFlex.lg="calc(40% - 15px)">
-          <mat-select placeholder="Tipo de vialidad">
-            <mat-option value="H">Calle</mat-option>
-            <mat-option value="M">Avenida</mat-option>
-          </mat-select>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
+      <div *ngIf="clientStepper.selectedIndex == 1">
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%">
+            <mat-label>Dirección del hogar</mat-label>
+            <input matInput type="text" placeholder="Dirección del hogar" formControlName="address" required>
+            <mat-error *ngIf="formAddressData.get('address').invalid">
+              {{ formAddressData.get('address').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Tiempo habitado</mat-label>
+            <input matInput type="text" placeholder="Tiempo habitado" formControlName="timeAvailable" required>
+            <mat-error *ngIf="formAddressData.get('timeAvailable').invalid">
+              {{ formAddressData.get('timeAvailable').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-select placeholder="Periodo" formControlName="period" required>
+              <mat-option value="H">Meses</mat-option>
+              <mat-option value="M">Años</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('period').invalid">
+              {{ formAddressData.get('period').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
+            <mat-label>Número exterior</mat-label>
+            <input matInput type="text" placeholder="Número exterior" formControlName="externalNumber" required>
+            <mat-error *ngIf="formAddressData.get('externalNumber').invalid">
+              {{ formAddressData.get('externalNumber').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
+            <mat-label>Número interior</mat-label>
+            <input matInput type="text" placeholder="Número interior" formControlName="internalNumber" required>
+            <mat-error *ngIf="formAddressData.get('internalNumber').invalid">
+              {{ formAddressData.get('internalNumber').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)" fxFlex.lg="calc(40% - 15px)">
+            <mat-select placeholder="Tipo de vialidad" formControlName="roadType" required>
+              <mat-option value="H">Calle</mat-option>
+              <mat-option value="M">Avenida</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('roadType').invalid">
+              {{ formAddressData.get('roadType').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)">
+            <mat-label>Código postal</mat-label>
+            <input matInput type="text" placeholder="Código postal" formControlName="postalCode">
+            <mat-error *ngIf="formAddressData.get('postalCode').invalid">
+              {{ formAddressData.get('postalCode').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)">
+            <mat-select placeholder="País" formControlName="country" required>
+              <mat-option value="H">Mexico</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('country').invalid">
+              {{ formAddressData.get('country').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(40% - 15px)">
+            <mat-select placeholder="Estado" formControlName="state" required>
+              <mat-option value="H">Chiapas</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('state').invalid">
+              {{ formAddressData.get('state').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)">
+            <mat-select placeholder="Municipio" formControlName="municipality" required>
+              <mat-option value="H">Tuxtla Gutiérrez</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('municipality').invalid">
+              {{ formAddressData.get('municipality').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="calc(50% - 15px)">
+            <mat-select placeholder="Colonia" formControlName="colony">
+              <mat-option value="H">Colonia</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('colony').invalid">
+              {{ formAddressData.get('colony').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Tipo de asentamiento humano</mat-label>
+            <input matInput type="text" placeholder="Tipo de asentamiento humano" formControlName="settlement">
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Nombre del asentamiento humano</mat-label>
+            <input matInput type="text" placeholder="Nombre del asentamiento humano" formControlName="settlementName">
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" placeholder="correo@email.com" formControlName="email" required>
+            <mat-error *ngIf="formAddressData.get('email').invalid">
+              {{ formAddressData.get('email').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-select placeholder="Rol del hogar" formControlName="rolHome" required>
+              <mat-option value="H">Jefe</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('rolHome').invalid">
+              {{ formAddressData.get('rolHome').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" placeholder="(999) 999 9999" formControlName="phone" required>
+            <mat-error *ngIf="formAddressData.get('phone').invalid">
+              {{ formAddressData.get('phone').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-select placeholder="Tipo de teléfono" formControlName="phoneType" required>
+              <mat-option value="H">Casa</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formAddressData.get('phoneType').invalid">
+              {{ formAddressData.get('phoneType').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="text-center">
+          <br><br>
+          <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
+          <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+        </div>
       </div>
 
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)">
-          <mat-label>Código postal</mat-label>
-          <input matInput type="number" placeholder="Código postal" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
+    </mat-step>
 
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)">
-          <mat-select placeholder="País">
-            <mat-option value="H">Mexico</mat-option>
-          </mat-select>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(40% - 15px)">
-          <mat-select placeholder="Estado">
-            <mat-option value="H">Chiapas</mat-option>
-          </mat-select>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)">
-          <mat-select placeholder="Municipio">
-            <mat-option value="H">Tuxtla Gutiérrez</mat-option>
-          </mat-select>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="calc(50% - 15px)">
-          <mat-select placeholder="Colonia">
-            <mat-option value="H">Colonia</mat-option>
-          </mat-select>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex.xs="100%" fxFlex="100%" fxFlex.md="calc(40% - 15px)">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput type="email" placeholder="Correo electrónico" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)" fxFlex.md="calc(30% - 15px)">
-          <mat-label>Teléfono</mat-label>
-          <input matInput type="number" placeholder="Teléfono" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)" fxFlex.md="calc(30% - 15px)">
-          <mat-select placeholder="Tipo de teléfono">
-            <mat-option value="H">Casa</mat-option>
-          </mat-select>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-      </div>
+    <mat-step formGroupName="bussinessData" [stepControl]="formBussinessData" errorMessage="Datos del negocio incompletos">
+      <ng-template matStepLabel> 
+        <b>Dirección del negocio</b>
+      </ng-template>
       
-      <div class="text-center">
+      <div *ngIf="clientStepper.selectedIndex == 2">
+        <mat-checkbox color="primary">Es la misma dirección que el domicilio</mat-checkbox>
         <br><br>
-        <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
-        <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%">
+            <mat-label>Dirección del negocio</mat-label>
+            <input matInput type="text" placeholder="Dirección del negocio" formControlName="address" required>
+            <mat-error *ngIf="formBussinessData.get('address').invalid">
+              {{ formBussinessData.get('address').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Tiempo habitado</mat-label>
+            <input matInput type="text" placeholder="Tiempo habitado" formControlName="timeAvailable" required>
+            <mat-error *ngIf="formBussinessData.get('timeAvailable').invalid">
+              {{ formBussinessData.get('timeAvailable').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-select placeholder="Periodo" formControlName="period" required>
+              <mat-option value="H">Meses</mat-option>
+              <mat-option value="M">Años</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('period').invalid">
+              {{ formBussinessData.get('period').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
+            <mat-label>Número exterior</mat-label>
+            <input matInput type="text" placeholder="Número exterior" formControlName="externalNumber">
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
+            <mat-label>Número interior</mat-label>
+            <input matInput type="text" placeholder="Número interior" formControlName="internalNumber">
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)" fxFlex.lg="calc(40% - 15px)">
+            <mat-select placeholder="Tipo de vialidad" formControlName="roadType" required>
+              <mat-option value="H">Calle</mat-option>
+              <mat-option value="M">Avenida</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('roadType').invalid">
+              {{ formBussinessData.get('roadType').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)">
+            <mat-label>Código postal</mat-label>
+            <input matInput type="text" placeholder="Código postal" formControlName="postalCode">
+            <mat-error *ngIf="formBussinessData.get('postalCode').invalid">
+              {{ formBussinessData.get('postalCode').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)">
+            <mat-select placeholder="País" formControlName="country" required>
+              <mat-option value="H">Mexico</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('country').invalid">
+              {{ formBussinessData.get('country').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(40% - 15px)">
+            <mat-select placeholder="Estado" formControlName="state" required>
+              <mat-option value="H">Chiapas</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('state').invalid">
+              {{ formBussinessData.get('state').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)">
+            <mat-select placeholder="Municipio" formControlName="municipality" required>
+              <mat-option value="H">Tuxtla Gutiérrez</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('municipality').invalid">
+              {{ formBussinessData.get('municipality').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="calc(50% - 15px)">
+            <mat-select placeholder="Colonia" formControlName="colony">
+              <mat-option value="H">Colonia</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Tipo de asentamiento humano</mat-label>
+            <input matInput type="text" placeholder="Tipo de asentamiento humano" formControlName="settlement">
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Nombre del asentamiento humano</mat-label>
+            <input matInput type="text" placeholder="Nombre del asentamiento humano" formControlName="settlementName">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" placeholder="Teléfono" formControlName="phone" required>
+            <mat-error *ngIf="formBussinessData.get('phone').invalid">
+              {{ formBussinessData.get('phone').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-select placeholder="Tipo de teléfono" formControlName="phoneType" required>
+              <mat-option value="H">Casa</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('phoneType').invalid">
+              {{ formBussinessData.get('phoneType').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="text-center">
+          <br><br>
+          <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
+          <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+        </div>
       </div>
+    
     </mat-step>
 
-    <mat-step>
+    <mat-step formGroupName="economicsData" [stepControl]="formEconomicsData" errorMessage="Datos económicos incompletos">
       <ng-template matStepLabel> 
         <b>Datos económicos</b>
       </ng-template>
 
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex="100%" fxFlex.md="40%" fxFlex.lg="40%">
-          <mat-label>Negocio y/o actividad económica</mat-label>
-          <input matInput type="text" placeholder="Negocio y/o actividad económica" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
+      <div *ngIf="clientStepper.selectedIndex == 3">
 
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)" fxFlex.lg="calc(30% - 15px)">
-          <mat-label>Inicio de la actividad productiva</mat-label>
-          <input matInput [matDatepicker]="productiveActivityDate" placeholder="Inicio de la actividad productiva" disabled>
-          <mat-datepicker-toggle matSuffix [for]="productiveActivityDate"></mat-datepicker-toggle>
-          <mat-datepicker #productiveActivityDate disabled="false"></mat-datepicker>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)" fxFlex.lg="calc(30% - 15px)">
-          <mat-label>Tiempo en la actividad</mat-label>
-          <input matInput type="number" placeholder="Tiempo en la actividad" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-      </div>
-    
-      <div class="text-center">
+        <mat-checkbox color="primary">Tiene negocio</mat-checkbox>
         <br><br>
-        <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
-        <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%" fxFlex.md="50%" fxFlex.lg="50%">
+            <mat-label>Negocio y/o actividad económica</mat-label>
+            <input matInput type="text" placeholder="Negocio y/o actividad económica" formControlName="economicActivity" required>
+            <mat-error *ngIf="formEconomicsData.get('economicActivity').invalid">
+              {{ formEconomicsData.get('economicActivity').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50%" fxFlex.lg="50%">
+            <mat-label>Inicio de la actividad productiva</mat-label>
+            <input matInput [matDatepicker]="beginActivity" placeholder="Inicio de la actividad productiva" formControlName="beginActivity" required>
+            <mat-datepicker-toggle matSuffix [for]="beginActivity"></mat-datepicker-toggle>
+            <mat-datepicker #beginActivity disabled="false"></mat-datepicker>
+            <mat-error *ngIf="formEconomicsData.get('beginActivity').invalid">
+              {{ formEconomicsData.get('beginActivity').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      
+        <div class="text-center">
+          <br><br>
+          <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
+          <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+        </div>
       </div>
+
     </mat-step>
 
-    <mat-step>
+    <mat-step formGroupName="lifeInsurance" [stepControl]="formLifeInsuranceData" errorMessage="Datos de seguro de vida incompletos">
       <ng-template matStepLabel> 
-        <b>Datos económicos</b>
+        <b>Designación del beneficiario del seguro de vida</b>
       </ng-template>
 
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-        <mat-form-field fxFlex="100%" fxFlex.md="40%" fxFlex.lg="40%">
-          <mat-label>Negocio y/o actividad económica</mat-label>
-          <input matInput type="text" placeholder="Negocio y/o actividad económica" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
+      <div *ngIf="clientStepper.selectedIndex == 4">
+        <h5>Designo como beneficiario del seguro a:</h5>
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" placeholder="Nombre" formControlName="firstname" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('firstname').invalid">
+              {{ formLifeInsuranceData.get('firstname').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
+            <mat-label>Apellido paterno</mat-label>
+            <input matInput type="text" placeholder="Apellido paterno" formControlName="pLastname" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('pLastname').invalid">
+              {{ formLifeInsuranceData.get('pLastname').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="40" fxFlex.md="40">
+            <mat-label>Apellido materno</mat-label>
+            <input matInput type="text" placeholder="Apellido materno" formControlName="mLastname" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('mLastname').invalid">
+              {{ formLifeInsuranceData.get('mLastname').errors | errorMessage: errorDict : { maxlength: [50] } }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput [matDatepicker]="beneficiaryBirthday" placeholder="Fecha de nacimiento" formControlName="birthday" required>
+            <mat-datepicker-toggle matSuffix [for]="beneficiaryBirthday"></mat-datepicker-toggle>
+            <mat-datepicker #beneficiaryBirthday disabled="false"></mat-datepicker>
+            <mat-error *ngIf="formLifeInsuranceData.get('birthday').invalid">
+              {{ formLifeInsuranceData.get('birthday').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+            <mat-select placeholder="Parentesco" formControlName="relationship" required>
+              <mat-option value="1">Madre</mat-option>
+              <mat-option value="2">Padre</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('relationship').invalid">
+              {{ formLifeInsuranceData.get('relationship').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="50" fxFlex.md="50">
+            <mat-label>Porcentaje</mat-label>
+            <input matInput type="text" placeholder="Del 0 al 100 porciento" formControlName="percent" required>
+            <span matSuffix>%</span>
+            <mat-error *ngIf="formLifeInsuranceData.get('percent').invalid">
+              {{ formLifeInsuranceData.get('percent').errors | errorMessage: errorDict : { greaterThan:[0], lessThan: [100] } }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="50" fxFlex.md="50">
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" placeholder="(999) 999 9999" formControlName="phone" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('phone').invalid">
+              {{ formLifeInsuranceData.get('phone').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%">
+            <mat-label>Domicilio</mat-label>
+            <input matInput type="text" placeholder="Domicilio" formControlName="address" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('address').invalid">
+              {{ formLifeInsuranceData.get('address').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
+            <mat-label>Número exterior</mat-label>
+            <input matInput type="text" placeholder="Número exterior" formControlName="externalNumber" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('externalNumber').invalid">
+              {{ formLifeInsuranceData.get('externalNumber').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
+            <mat-label>Número interior</mat-label>
+            <input matInput type="text" placeholder="Número interior" formControlName="internalNumber" required>
+            <mat-error *ngIf="formLifeInsuranceData.get('internalNumber').invalid">
+              {{ formLifeInsuranceData.get('internalNumber').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)" fxFlex.lg="calc(40% - 15px)">
+            <mat-select placeholder="Tipo de vialidad" formControlName="roadType">
+              <mat-option value="H">Calle</mat-option>
+              <mat-option value="M">Avenida</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('roadType').invalid">
+              {{ formLifeInsuranceData.get('roadType').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)">
+            <mat-label>Código postal</mat-label>
+            <input matInput type="text" placeholder="Código postal">
+            <mat-error *ngIf="formLifeInsuranceData.get('postalCode').invalid">
+              {{ formLifeInsuranceData.get('postalCode').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)">
+            <mat-select placeholder="País" formControlName="country" required>
+              <mat-option value="H">Mexico</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('country').invalid">
+              {{ formLifeInsuranceData.get('country').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(40% - 15px)">
+            <mat-select placeholder="Estado" formControlName="state" required>
+              <mat-option value="H">Chiapas</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('state').invalid">
+              {{ formLifeInsuranceData.get('state').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)">
+            <mat-select placeholder="Municipio" formControlName="municipality" required>
+              <mat-option value="H">Tuxtla Gutiérrez</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('municipality').invalid">
+              {{ formLifeInsuranceData.get('municipality').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="calc(50% - 15px)">
+            <mat-select placeholder="Colonia" formControlName="colony">
+              <mat-option value="H">Colonia</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('colony').invalid">
+              {{ formLifeInsuranceData.get('colony').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Tipo de asentamiento humano</mat-label>
+            <input matInput type="text" placeholder="Tipo de asentamiento humano" formControlName="settlement">
+            <mat-error *ngIf="formLifeInsuranceData.get('settlement').invalid">
+              {{ formLifeInsuranceData.get('settlement').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Nombre del asentamiento humano</mat-label>
+            <input matInput type="text" placeholder="Nombre del asentamiento humano" formControlName="settlementName">
+            <mat-error *ngIf="formLifeInsuranceData.get('settlementName').invalid">
+              {{ formLifeInsuranceData.get('settlementName').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>  
+  
+        <p>
+          <strong>
+              OTORGO MI CONSENTIMIENTO PARA SER ASEGURADA DENTRO DE LA PÓLIZA DE SEGURO DE VIDA GRUPO QUE HA SIDO CONTRATADA CON QBE DE MÉXICO CÍA. DE SEGUROS, S.A. DE C.V.
+          </strong>
+        </p>
+      
+        <div class="text-center">
+          <br><br>
+          <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
+          <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+        </div>
+      </div>
 
-        <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)" fxFlex.lg="calc(30% - 15px)">
-          <mat-label>Tiempo en la actividad</mat-label>
-          <input matInput type="number" placeholder="Tiempo en la actividad" required>
-          <mat-error *ngIf="false">No es un correo</mat-error>
-        </mat-form-field>
-      </div>
-    
-      <div class="text-center">
-        <br><br>
-        <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
-        <button mat-raised-button matStepperNext color="warn">Crear cliente</button>
-      </div>
     </mat-step>
 
   </mat-vertical-stepper>

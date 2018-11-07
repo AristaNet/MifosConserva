@@ -50,13 +50,13 @@ export class ErrorMessagePipe implements PipeTransform {
    * @param value Object of errors (formPersonalData.get('firstname').errors)
    * @param dict Dictionary with the same keys of the errors returned from the value (formPersonalData.get('firstname').errors)
    * @param opts Options by replacing the "{*}" over the string message, indicating the key (e.g: maxlength, required) for applying the replace to the correct error message
-   * @returns The correct error message
+   * @returns The first error message found
    */
 
   transform(value: any, dict: any, opts: any = {}): string {
 
     // it checks that the inputs 
-    if ((typeof value != 'object') || Array.isArray(value) && (typeof dict != 'object') || Array.isArray(dict)) return null;
+    if ((typeof value != 'object') || Array.isArray(value) || (typeof dict != 'object') || Array.isArray(dict)) return null;
 
     // it gets the key
     const regex: RegExp = /{\*}/;
