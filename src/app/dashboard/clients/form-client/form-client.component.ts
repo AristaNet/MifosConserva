@@ -194,7 +194,6 @@ export class FormClientComponent implements OnInit {
       birthday: ['', [ Validators.required ]],
       relationship: [null, Validators.required ],
       percent: ['', [ CommonValidators.requiredTrim, CommonValidators.isNumber, CommonValidators.greaterThan(0), CommonValidators.lessThan(100, true) ]],
-      phone: ['', CommonValidators.isPhone ],
       address: ['', CommonValidators.requiredTrim ],
       externalNumber: [''],
       internalNumber: [''],
@@ -203,9 +202,12 @@ export class FormClientComponent implements OnInit {
       country: ['', Validators.required ],
       state: ['', Validators.required ],
       municipality: ['', Validators.required ],
+      locality: ['', Validators.required],
       colony: [''],
       settlement: [''],
       settlementName: [''],
+      formPhone: this.createFormPhone(),
+      phones: this.fb.array([], Validators.required)
     });
 
     this.formClient = this.fb.group({ 

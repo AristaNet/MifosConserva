@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'an-chips-phones',
   templateUrl: './chips-phones.component.html',
   styleUrls: ['./chips-phones.component.css']
 })
-export class ChipsPhonesComponent implements OnInit {
+export class ChipsPhonesComponent {
 
   /**
    * Collections of phone numbers
@@ -58,8 +58,5 @@ export class ChipsPhonesComponent implements OnInit {
   edit(phone: any, index: number): void {
     this.editPhone.emit({ phone, index });
  }
-
-  ngOnInit() {
-  }
 
 }

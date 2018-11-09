@@ -9,8 +9,9 @@
       <mat-form-field class="full-width">
         <mat-label>Correo electrónico</mat-label>
         <input matInput type="text" placeholder="ejemplo: correo@email.com" formControlName="email" required>
-        <mat-error *ngIf="loginForm.get('email')?.errors?.isEmail">No es un correo</mat-error>
-        <mat-error *ngIf="loginForm.get('email')?.errors?.required">Este campo es requerido</mat-error>
+        <mat-error *ngIf="loginForm.get('email').invalid">
+          {{ loginForm.get('email').errors | errorMessage: errorDict }}
+        </mat-error>
       </mat-form-field>
       
       <br>
@@ -21,7 +22,9 @@
         <button matSuffix mat-icon-button type="button" *ngIf="loginForm.get('password').value" (click)="showPassword()">
             <mat-icon>{{ isShowingPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
-        <mat-error *ngIf="loginForm.get('password')?.errors?.required">Este campo es requerido</mat-error>
+        <mat-error *ngIf="loginForm.get('password').invalid">
+          {{ loginForm.get('password').errors | errorMessage: errorDict }}
+        </mat-error>
       </mat-form-field>
   
       <br><br>

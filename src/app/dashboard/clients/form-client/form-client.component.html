@@ -792,8 +792,8 @@
           </mat-form-field>
         </div>
   
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc(100%)" fxFlex.md="calc(33.3% - 15px)">
             <mat-label>Fecha de nacimiento</mat-label>
             <input matInput [matDatepicker]="beneficiaryBirthday" placeholder="Fecha de nacimiento" formControlName="birthday" required>
             <mat-datepicker-toggle matSuffix [for]="beneficiaryBirthday"></mat-datepicker-toggle>
@@ -803,7 +803,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.md="50">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(33.3% - 15px)">
             <mat-select placeholder="Parentesco" formControlName="relationship" required>
               <mat-option value="1">Madre</mat-option>
               <mat-option value="2">Padre</mat-option>
@@ -812,23 +812,13 @@
               {{ formLifeInsuranceData.get('relationship').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
-        </div>
-  
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="50" fxFlex.md="50">
+
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(33.3% - 15px)">
             <mat-label>Porcentaje</mat-label>
             <input matInput type="text" placeholder="Del 0 al 100 porciento" formControlName="percent" required>
             <span matSuffix>%</span>
             <mat-error *ngIf="formLifeInsuranceData.get('percent').invalid">
               {{ formLifeInsuranceData.get('percent').errors | errorMessage: errorDict : { greaterThan:[0], lessThan: [100] } }}
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="50" fxFlex.md="50">
-            <mat-label>Teléfono</mat-label>
-            <input matInput type="text" placeholder="(999) 999 9999" formControlName="phone" required>
-            <mat-error *ngIf="formLifeInsuranceData.get('phone').invalid">
-              {{ formLifeInsuranceData.get('phone').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -846,41 +836,41 @@
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
           <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
             <mat-label>Número exterior</mat-label>
-            <input matInput type="text" placeholder="Número exterior" formControlName="externalNumber" required>
-            <mat-error *ngIf="formLifeInsuranceData.get('externalNumber').invalid">
-              {{ formLifeInsuranceData.get('externalNumber').errors | errorMessage: errorDict }}
+            <input matInput type="text" placeholder="Número exterior" formControlName="externalNumber">
+            <mat-error *ngIf="formAddressData.get('externalNumber').invalid">
+              {{ formAddressData.get('externalNumber').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
   
           <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(30% - 15px)">
             <mat-label>Número interior</mat-label>
-            <input matInput type="text" placeholder="Número interior" formControlName="internalNumber" required>
-            <mat-error *ngIf="formLifeInsuranceData.get('internalNumber').invalid">
-              {{ formLifeInsuranceData.get('internalNumber').errors | errorMessage: errorDict }}
+            <input matInput type="text" placeholder="Número interior" formControlName="internalNumber">
+            <mat-error *ngIf="formAddressData.get('internalNumber').invalid">
+              {{ formAddressData.get('internalNumber').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
   
           <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)" fxFlex.lg="calc(40% - 15px)">
-            <mat-select placeholder="Tipo de vialidad" formControlName="roadType">
+            <mat-select placeholder="Tipo de vialidad" formControlName="roadType" required>
               <mat-option value="H">Calle</mat-option>
               <mat-option value="M">Avenida</mat-option>
             </mat-select>
-            <mat-error *ngIf="formLifeInsuranceData.get('roadType').invalid">
-              {{ formLifeInsuranceData.get('roadType').errors | errorMessage: errorDict }}
+            <mat-error *ngIf="formAddressData.get('roadType').invalid">
+              {{ formAddressData.get('roadType').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
         </div>
   
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(20% - 15px)" fxFlex.md="calc(20% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-label>Código postal</mat-label>
-            <input matInput type="text" placeholder="Código postal">
+            <input matInput type="text" placeholder="Código postal" formControlName="postalCode">
             <mat-error *ngIf="formLifeInsuranceData.get('postalCode').invalid">
               {{ formLifeInsuranceData.get('postalCode').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(80% - 15px)" fxFlex.md="calc(80% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="País" formControlName="country" required>
               <mat-option value="H">Mexico</mat-option>
             </mat-select>
@@ -889,7 +879,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(40% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="Estado" formControlName="state" required>
               <mat-option value="H">Chiapas</mat-option>
             </mat-select>
@@ -898,7 +888,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="Municipio" formControlName="municipality" required>
               <mat-option value="H">Tuxtla Gutiérrez</mat-option>
             </mat-select>
@@ -906,8 +896,17 @@
               {{ formLifeInsuranceData.get('municipality').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
+
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
+            <mat-select placeholder="Localidad" formControlName="locality" required>
+              <mat-option value="H">Tuxtla Gutiérrez</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('locality').invalid">
+              {{ formLifeInsuranceData.get('locality').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="calc(50% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="Colonia" formControlName="colony">
               <mat-option value="H">Colonia</mat-option>
             </mat-select>
@@ -934,6 +933,50 @@
             </mat-error>
           </mat-form-field>
         </div>  
+
+        <div formGroupName="formPhone" fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+
+          <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 15px)">
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" placeholder="(999) 999 9999" formControlName="phone">
+            <mat-error *ngIf="formLifeInsuranceData.get('formPhone.phone').invalid">
+              {{ formLifeInsuranceData.get('formPhone.phone').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex="calc(30% - 15px)">
+            <mat-select placeholder="Tipo de teléfono" formControlName="phoneType">
+              <mat-option value="H">Casa</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formLifeInsuranceData.get('formPhone.phoneType').invalid">
+              {{ formLifeInsuranceData.get('formPhone.phoneType').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+
+          <div class="text-center" style="padding-top: 8px;" fxFlex.xs="100%" fxFlex>
+            <button mat-raised-button 
+              color="primary" 
+              type="button" 
+              [disabled]="formLifeInsuranceData.get('formPhone.phone').invalid || !formLifeInsuranceData.get('formPhone.phone').value || !formLifeInsuranceData.get('formPhone.phoneType').value" 
+              (click)="addPhone( formLifeInsuranceData )">
+              {{ formLifeInsuranceData.get('formPhone.isEdited').value ? 'Editar' : 'Agregar' }} teléfono
+            </button>
+          </div>
+          
+        </div>
+
+        <mat-error class="text-center" *ngIf="formLifeInsuranceData.get('phones').invalid">
+          Necesita agregar por lo menos un número de teléfono
+        </mat-error>
+
+        <br>
+        <an-chips-phones
+          [phones]="formLifeInsuranceData.get('phones').value"
+          phoneProp="phone"
+          phoneTypeProp="phoneType"
+          (editPhone)="editPhone( $event, formLifeInsuranceData.get('formPhone') )"
+          (removePhone)="removePhone( $event, formLifeInsuranceData )"
+        ></an-chips-phones>
   
         <p>
           <strong>
@@ -944,7 +987,7 @@
         <div class="text-center">
           <br><br>
           <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
-          <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>
+          <button mat-raised-button type="submit" color="primary">Guardar</button>
         </div>
       </div>
 
