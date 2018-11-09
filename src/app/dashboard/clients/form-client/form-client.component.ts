@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonValidators } from 'ng-validator';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { errorMessage } from '../../../sources/formErrorMessage';
@@ -68,6 +68,14 @@ export class FormClientComponent implements OnInit {
   }
 
   /**
+   * Getter that returns the sub form group pldData
+   */
+
+  get formPldData(): FormGroup {
+    return this.formClient.get('pldData') as FormGroup;
+  }
+
+  /**
    * Getter that returns the sub form group economicsData
    */
 
@@ -86,8 +94,8 @@ export class FormClientComponent implements OnInit {
       firstname: ['', [ CommonValidators.requiredTrim, Validators.maxLength(50) ]],
       pLastname: ['', [ CommonValidators.requiredTrim, Validators.maxLength(50) ]],
       mLastname: ['', [ CommonValidators.requiredTrim, Validators.maxLength(50) ]],
-      gender: [null, CommonValidators.requiredTrim ],
-      maritalStatus: [null, CommonValidators.requiredTrim ],
+      gender: [null, Validators.required ],
+      maritalStatus: [null, Validators.required ],
       scholarship: [null],
       profession: [null],
       electorKey: ['', CommonValidators.isNumber ],
@@ -96,12 +104,9 @@ export class FormClientComponent implements OnInit {
       electronicSignature: [''],
       IDProspera: [''],
       birthday: ['', [ Validators.required ]],
-      birthdayEntity: [''],
+      birthdayEntity: [null, Validators.required ],
       requestDate: ['', Validators.required],
       numberDependents: ['', CommonValidators.isNumber ],
-      hasPublicCharge: [null],
-      familyHasPublicFunction: [null],
-      publicFunctionSpecification: [''],
       speakNativeLanguage: [null],
       hasDisabilities: [null],
       hasInternet: [null],
@@ -119,13 +124,14 @@ export class FormClientComponent implements OnInit {
       country: ['', Validators.required],
       state: ['', Validators.required],
       municipality: ['', Validators.required],
+      locality: ['', Validators.required],
       colony: [''],
       settlement: [''],
       settlementName: [''],
-      email: ['', [CommonValidators.requiredTrim, CommonValidators.isEmail ]],
+      email: ['', CommonValidators.isEmail ],
       rolHome: ['', Validators.required],
-      phone: ['', [ CommonValidators.requiredTrim, CommonValidators.isPhone ]],
-      phoneType: ['', Validators.required ]
+      formPhone: this.createFormPhone(),
+      phones: this.fb.array([], Validators.required)
     });
 
     const bussinessData = this.fb.group({
@@ -142,8 +148,15 @@ export class FormClientComponent implements OnInit {
       colony: [''],
       settlement: [''],
       settlementName: [''],
-      phone: ['', [ CommonValidators.requiredTrim, CommonValidators.isPhone ]],
-      phoneType: ['', Validators.required ]
+      formPhone: this.createFormPhone(),
+      phones: this.fb.array([], Validators.required)
+    });
+
+    const pldData = this.fb.group({
+      hasPublicCharge: [null],
+      hasPublicChargeSpecification: [''],
+      familyHasPublicFunction: [null],
+      publicFunctionSpecification: ['']
     });
 
     const economicsData = this.fb.group({
@@ -188,10 +201,89 @@ export class FormClientComponent implements OnInit {
       personalData, 
       addressData, 
       bussinessData,
+      pldData,
       economicsData,
       lifeInsurance
     });
   }
+
+  /**
+   * it creates a new form phone group
+   * @returns A formGroup with two props phone and phoneType
+   */
+
+  private createFormPhone(): FormGroup {
+    return this.fb.group({
+      phone: [null, CommonValidators.isPhone ],
+      phoneType: [null],
+      isEdited: null,
+      index: null
+    });
+  }
+
+  /**
+   * It adds a new phone number to the formArray control or update if is edited
+   * 
+   * @param form form group to edit and it has a formPhone
+   */
+
+  public addPhone(form: FormGroup): void {
+    const f = form.get('phones') as FormArray;
+    const formPhone = form.get('formPhone');
+    const phone = formPhone.get('phone').value;
+    const phoneType = formPhone.get('phoneType').value;
+    const isEdited = formPhone.get('isEdited').value;
+    const index = formPhone.get('index').value;
+
+    // it checks if the form is edited and if the position exists
+    if( isEdited && f.at( index ) ) {
+      // it updates the formArray in the position passed
+      f.at( index ).patchValue({ phone, phoneType });
+    } else {
+      // it adds new formgroup to the array
+      f.push(
+        this.fb.group({ phone, phoneType })
+      );
+    }
+
+    formPhone.reset();
+  }
+
+  /**
+   * It removes a phone number of the formArray control
+   * 
+   * @param phoneRemoved phone removed in the chips phone collections, it contains the following object { index: 0, phone: { phone: '123132132', phoneType: 1 } }
+   * @param form the specific form group where the phone object will be removed
+   */
+
+   public removePhone(phoneRemoved: any, form: FormGroup): void {
+    const phones = form.get('phones') as FormArray;
+    const formPhone = form.get('formPhone');
+
+    phones.removeAt( phoneRemoved.index );
+
+    // if the phone is being edited and the same time is being removed, reset the formPhone to avoid errors
+    if ( formPhone.get('index').value == phoneRemoved.index ) 
+      formPhone.reset();
+
+   }
+
+   /**
+   * It edits a phone number of the formArray control
+   * 
+   * @param phoneToEdit The phone object to edit, it contains the following object { index: 0, phone: { phone: '123132132', phoneType: 1 } }
+   * @param formPhone The form group where it will be reflected the data for editing
+   */
+
+  public editPhone(phoneToEdit: any, formPhone: FormGroup): void {
+    let phone = phoneToEdit.phone;
+
+    // it adds the index to edit and specify that it is edited
+    phone.isEdited = true;
+    phone.index = phoneToEdit.index;
+
+    formPhone.patchValue( phone );
+   }
 
   /**
    * It sends the data to the server

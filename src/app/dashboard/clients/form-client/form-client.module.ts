@@ -18,6 +18,9 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 
+// Custom Modules
+import { ChipsPhonesModule } from '../../../components/chips-phones/chips-phones.module';
+
 // Pipes
 import { ErrorMessageModule } from '../../../pipes/error-message/error-message.module';
 
@@ -38,7 +41,8 @@ import { FormClientComponent } from './form-client.component';
     MatNativeDateModule,
     MatSelectModule,
     ErrorMessageModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ChipsPhonesModule
   ],
   declarations: [
     FormClientComponent

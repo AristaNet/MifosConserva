@@ -1,0 +1,7 @@
+<mat-chip-list>
+  <mat-chip *ngFor="let p of phones; let i = index">
+    {{ p[ phoneProp ] + ' (' + p[ phoneTypeProp ] + ')' }}
+    <mat-icon matChipRemove (click)="edit( p, i )">edit</mat-icon>
+    <mat-icon matChipRemove (click)="remove( p, i )">cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>
