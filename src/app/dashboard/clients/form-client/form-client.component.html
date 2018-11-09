@@ -408,12 +408,100 @@
 
     <mat-step formGroupName="bussinessData" [stepControl]="formBussinessData" errorMessage="Datos del negocio incompletos">
       <ng-template matStepLabel> 
-        <b>Dirección del negocio</b>
+        <b>Datos del negocio</b>
       </ng-template>
       
       <div *ngIf="clientStepper.selectedIndex == 2">
-        <mat-checkbox color="primary">Es la misma dirección que el domicilio</mat-checkbox>
+        <mat-checkbox formControlName="isCopied" color="primary" (change)="copyAddressToBussiness($event)">Copiar datos de domicilio</mat-checkbox>
         <br><br>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="calc(100%)" fxFlex.md="calc( 30% - 15px )" fxFlex.lg="calc( 30% - 15px )">
+            <mat-select placeholder="actividad económica" formControlName="economicActivity" required>
+              <mat-option value="H">Web developer</mat-option>
+              <mat-option value="M">Mobile developer</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('economicActivity').invalid">
+              {{ formBussinessData.get('economicActivity').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc( 50% - 15px )" fxFlex.md="calc( 30% - 15px )" fxFlex.lg="calc( 30% - 15px )">
+            <mat-label>Inicio de la actividad productiva</mat-label>
+            <input matInput [matDatepicker]="beginActivity" placeholder="Inicio de la actividad productiva" formControlName="beginActivity" required>
+            <mat-datepicker-toggle matSuffix [for]="beginActivity"></mat-datepicker-toggle>
+            <mat-datepicker #beginActivity disabled="false"></mat-datepicker>
+            <mat-error *ngIf="formBussinessData.get('beginActivity').invalid">
+              {{ formBussinessData.get('beginActivity').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px )" fxFlex.md="calc( 30% - 15px )" fxFlex.lg="calc( 30% - 15px )">
+            <mat-label>Número de emplados</mat-label>
+            <input matInput type="text" placeholder="Número de emplados" formControlName="employeesNumber" required>
+            <mat-error *ngIf="formBussinessData.get('employeesNumber').invalid">
+              {{ formBussinessData.get('employeesNumber').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px)" fxFlex.md="calc( 50% - 15px )" fxFlex.lg="calc( 50% - 15px )">
+            <mat-select placeholder="Origen de los recursos" formControlName="resourcesOrigin" required>
+              <mat-option value="H">Ventas</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('resourcesOrigin').invalid">
+              {{ formBussinessData.get('resourcesOrigin').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px)" fxFlex.md="calc( 50% - 15px )" fxFlex.lg="calc( 50% - 15px )">
+            <mat-select placeholder="Destino del crédito" formControlName="creditDestination" required>
+              <mat-option value="H">Materiales</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('creditDestination').invalid">
+              {{ formBussinessData.get('creditDestination').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px)" fxFlex.md="calc( 50% - 15px )" fxFlex.lg="calc( 20.5% - 15px )">
+            <mat-label>Ventas totales</mat-label>
+            <span matPrefix>$&nbsp;</span>
+            <input matInput type="text" placeholder="Ventas totales" formControlName="totalSales" required>
+            <mat-error *ngIf="formBussinessData.get('totalSales').invalid">
+              {{ formBussinessData.get('totalSales').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px)" fxFlex.md="calc( 50% - 15px )" fxFlex.lg="calc( 20.5% - 15px )">
+            <mat-label>Gastos</mat-label>
+            <span matPrefix>$&nbsp;</span>
+            <input matInput type="text" placeholder="Gastos" formControlName="expenses" required>
+            <mat-error *ngIf="formBussinessData.get('expenses').invalid">
+              {{ formBussinessData.get('expenses').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px)" fxFlex.md="calc( 50% - 15px )" fxFlex.lg="calc( 20.5% - 15px )">
+            <mat-label>Otros ingresos</mat-label>
+            <span matPrefix>$&nbsp;</span>
+            <input matInput type="text" placeholder="Otros ingresos" formControlName="anotherIncome" required>
+            <mat-error *ngIf="formBussinessData.get('anotherIncome').invalid">
+              {{ formBussinessData.get('anotherIncome').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field fxFlex="100%" fxFlex.sm="calc( 50% - 15px)" fxFlex.md="calc( 50% - 15px )" fxFlex.lg="calc( 20.5% - 15px )">
+            <mat-label>Total de ingresos</mat-label>
+            <span matPrefix>$&nbsp;</span>
+            <input matInput type="text" placeholder="Total de ingresos" formControlName="totalIncome" required>
+            <mat-error *ngIf="formBussinessData.get('totalIncome').invalid">
+              {{ formBussinessData.get('totalIncome').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
           <mat-form-field fxFlex="100%">
@@ -468,7 +556,7 @@
         </div>
 
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="15px">
-          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(20% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(20% - 15px)" fxFlex.md="calc(20% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-label>Código postal</mat-label>
             <input matInput type="text" placeholder="Código postal" formControlName="postalCode">
             <mat-error *ngIf="formBussinessData.get('postalCode').invalid">
@@ -476,7 +564,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.md="calc(40% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(80% - 15px)" fxFlex.md="calc(80% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="País" formControlName="country" required>
               <mat-option value="H">Mexico</mat-option>
             </mat-select>
@@ -485,7 +573,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(40% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="Estado" formControlName="state" required>
               <mat-option value="H">Chiapas</mat-option>
             </mat-select>
@@ -494,7 +582,7 @@
             </mat-error>
           </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="Municipio" formControlName="municipality" required>
               <mat-option value="H">Tuxtla Gutiérrez</mat-option>
             </mat-select>
@@ -502,11 +590,23 @@
               {{ formBussinessData.get('municipality').errors | errorMessage: errorDict }}
             </mat-error>
           </mat-form-field>
+
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
+            <mat-select placeholder="Localidad" formControlName="locality" required>
+              <mat-option value="H">Tuxtla Gutiérrez</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('locality').invalid">
+              {{ formBussinessData.get('locality').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
   
-          <mat-form-field fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="calc(50% - 15px)">
+          <mat-form-field fxFlex.xs="100%" fxFlex.sm="calc(50% - 15px)" fxFlex.md="calc(50% - 15px)" fxFlex.lg="calc(30% - 15px)">
             <mat-select placeholder="Colonia" formControlName="colony">
               <mat-option value="H">Colonia</mat-option>
             </mat-select>
+            <mat-error *ngIf="formBussinessData.get('colony').invalid">
+              {{ formBussinessData.get('colony').errors | errorMessage: errorDict }}
+            </mat-error>
           </mat-form-field>
         </div>
 

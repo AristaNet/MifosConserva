@@ -4,6 +4,7 @@ import { CommonValidators } from 'ng-validator';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { errorMessage } from '../../../sources/formErrorMessage';
 import { RGX } from '../../../sources/regex';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 /**
  * Component class that contains all the accions a properties for the form-client.component.html
@@ -135,6 +136,16 @@ export class FormClientComponent implements OnInit {
     });
 
     const bussinessData = this.fb.group({
+      isCopied: false,
+      economicActivity: [null, Validators.required],
+      beginActivity: [null, Validators.required],
+      employeesNumber: ['', [ CommonValidators.requiredTrim, CommonValidators.isNumber ]],
+      resourcesOrigin: [null, Validators.required],
+      creditDestination: [null, Validators.required],
+      totalSales: ['', [ CommonValidators.requiredTrim, CommonValidators.isNumber ]],
+      expenses: ['', [ CommonValidators.requiredTrim, CommonValidators.isNumber ]],
+      anotherIncome: ['', CommonValidators.isNumber ],
+      totalIncome: ['', CommonValidators.isNumber ],
       address: ['', CommonValidators.requiredTrim ],
       timeAvailable: ['', [ CommonValidators.requiredTrim, CommonValidators.isNumber ]],
       period: [null, Validators.required ],
@@ -145,6 +156,7 @@ export class FormClientComponent implements OnInit {
       country: ['', Validators.required],
       state: ['', Validators.required],
       municipality: ['', Validators.required],
+      locality: ['', Validators.required],
       colony: [''],
       settlement: [''],
       settlementName: [''],
@@ -159,7 +171,7 @@ export class FormClientComponent implements OnInit {
       publicFunctionSpecification: ['']
     });
 
-    const economicsData = this.fb.group({
+    /* const economicsData = this.fb.group({
       economicActivity: ['', [ CommonValidators.requiredTrim, Validators.maxLength(50) ]],
       beginActivity: ['', Validators.required],
       employeesNumber: ['', [ CommonValidators.requiredTrim, CommonValidators.isNumber ]],
@@ -174,7 +186,7 @@ export class FormClientComponent implements OnInit {
       incomeHasImproved: [null, Validators.required],
       hasAnotherJob: [null, Validators.required ],
 
-    });
+    }); */
 
     const lifeInsurance = this.fb.group({
       firstname: ['', [ CommonValidators.requiredTrim, Validators.maxLength(50) ]],
@@ -202,7 +214,7 @@ export class FormClientComponent implements OnInit {
       addressData, 
       bussinessData,
       pldData,
-      economicsData,
+      // economicsData,
       lifeInsurance
     });
   }
@@ -256,7 +268,7 @@ export class FormClientComponent implements OnInit {
    * @param form the specific form group where the phone object will be removed
    */
 
-   public removePhone(phoneRemoved: any, form: FormGroup): void {
+  public removePhone(phoneRemoved: any, form: FormGroup): void {
     const phones = form.get('phones') as FormArray;
     const formPhone = form.get('formPhone');
 
@@ -266,7 +278,7 @@ export class FormClientComponent implements OnInit {
     if ( formPhone.get('index').value == phoneRemoved.index ) 
       formPhone.reset();
 
-   }
+  }
 
    /**
    * It edits a phone number of the formArray control
@@ -283,7 +295,35 @@ export class FormClientComponent implements OnInit {
     phone.index = phoneToEdit.index;
 
     formPhone.patchValue( phone );
-   }
+  }
+
+  /**
+   * It copies the formAddress data to formBussines
+   * 
+   * @param checkboxEvent The checkboxEvent when the checkbox is marked or unmarked
+   */
+
+  public copyAddressToBussiness(checkboxEvent: MatCheckbox): void {
+
+    if ( checkboxEvent.checked ) {
+      const formAddress = this.formAddressData.value;
+
+      this.formBussinessData.patchValue( formAddress );
+      
+      // it's necesary replace the phone property and filled manually, because when the patchValue() is executed, it doesn't fill the phones formArray.
+      if ( Array.isArray( formAddress.phones ) && formAddress.phones.length ) {
+        this.formBussinessData.setControl('phones', this.fb.array(
+          formAddress.phones.map( e => this.fb.group( e ) )
+        ));
+      }
+
+    } else {
+      this.formBussinessData.reset();
+      // it's necesary replace the phones property, because the reset() methods only clean the data
+      this.formBussinessData.setControl('phones', this.fb.array([], Validators.required));
+    }
+
+  }
 
   /**
    * It sends the data to the server
