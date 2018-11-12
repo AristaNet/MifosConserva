@@ -54,8 +54,6 @@ export class SeasonalitySaleComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('GROUPS:', this.months);
-
     // If the months property doesn't has data, assign data
     if (this.months && !this.months.length) {
       this.months = [

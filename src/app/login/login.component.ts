@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { CommonValidators } from 'ng-validator';
 import { errorMessage } from '../sources/formErrorMessage';
 
+/**
+ * Component class that manages the login page
+ */
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

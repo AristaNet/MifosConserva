@@ -337,7 +337,6 @@ export class FormClientComponent implements OnInit {
 
   public seasonalitySaleEvent(seasonality: SeasonalitySale[]): void {
     this.formBussinessData.setControl('seasonality', this.fb.array( seasonality ));
-    console.log('bussinessData: ', this.formBussinessData.value);
   }
 
   /**

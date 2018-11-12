@@ -1,5 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+/**
+ * Component class that generate a list of chips for phone numbers
+ */
+
 @Component({
   selector: 'an-chips-phones',
   templateUrl: './chips-phones.component.html',
