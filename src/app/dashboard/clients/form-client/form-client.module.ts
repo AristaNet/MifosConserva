@@ -15,11 +15,13 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSliderModule
 } from '@angular/material';
 
 // Custom Modules
 import { ChipsPhonesModule } from '../../../components/chips-phones/chips-phones.module';
+import { SeasonalitySaleModule } from '../../../components/seasonality-sale/seasonality-sale.module';
 
 // Pipes
 import { ErrorMessageModule } from '../../../pipes/error-message/error-message.module';
@@ -42,7 +44,9 @@ import { FormClientComponent } from './form-client.component';
     MatSelectModule,
     ErrorMessageModule,
     MatCheckboxModule,
-    ChipsPhonesModule
+    MatSliderModule,
+    ChipsPhonesModule,
+    SeasonalitySaleModule
   ],
   declarations: [
     FormClientComponent

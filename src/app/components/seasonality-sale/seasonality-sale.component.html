@@ -1,0 +1,17 @@
+<div>
+  <div class="text-center">
+    <span *ngFor="let s of seasonalityState" [matTooltip]="s.name" matTooltipPosition="above" class="text-label-seasonality">
+      <div class="label-seasonality seasonality-{{ s.key }}">&nbsp;</div>
+      {{ s.key }} &nbsp;
+    </span>
+  </div>
+  <br><br>
+  <button mat-button type="button" 
+    *ngFor="let m of months" 
+    [ngClass]="'seasonality-' + m.state" 
+    [matTooltip]="m.longName" 
+    matTooltipPosition="above"
+    (click)="changeState(m)">
+    {{ m.shortName }}
+  </button>
+</div>

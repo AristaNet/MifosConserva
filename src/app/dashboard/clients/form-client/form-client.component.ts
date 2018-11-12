@@ -5,6 +5,7 @@ import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { errorMessage } from '../../../sources/formErrorMessage';
 import { RGX } from '../../../sources/regex';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { SeasonalitySale } from '../../../components/seasonality-sale/seasonality-sale';
 
 /**
  * Component class that contains all the accions a properties for the form-client.component.html
@@ -160,7 +161,9 @@ export class FormClientComponent implements OnInit {
       settlement: [''],
       settlementName: [''],
       formPhone: this.createFormPhone(),
-      phones: this.fb.array([], Validators.required)
+      phones: this.fb.array([], Validators.required),
+      revolvency: [null, Validators.required],
+      seasonality: this.fb.array([])
     });
 
     const pldData = this.fb.group({
@@ -324,6 +327,17 @@ export class FormClientComponent implements OnInit {
       this.formBussinessData.setControl('phones', this.fb.array([], Validators.required));
     }
 
+  }
+
+  /**
+   * It gets the seasonality of the every month and set it to the bussiness form
+   * 
+   * @param seasonality All the seasonality of every months of the year
+   */
+
+  public seasonalitySaleEvent(seasonality: SeasonalitySale[]): void {
+    this.formBussinessData.setControl('seasonality', this.fb.array( seasonality ));
+    console.log('bussinessData: ', this.formBussinessData.value);
   }
 
   /**

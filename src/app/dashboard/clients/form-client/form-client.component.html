@@ -667,6 +667,27 @@
         ></an-chips-phones>
 
         <div class="text-center">
+          <h4>Estacionalidad de venta</h4>
+          <br>
+
+          <mat-form-field style="width: 80%">
+            <mat-select placeholder="Revolvencia del negocio" formControlName="revolvency">
+              <mat-option value="H">No sé</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formBussinessData.get('revolvency').invalid">
+              {{ formBussinessData.get('revolvency').errors | errorMessage: errorDict }}
+            </mat-error>
+          </mat-form-field>
+
+          <br><br>
+
+          <an-seasonality-sale
+            [months]="formBussinessData.get('seasonality').value || []" 
+            (stateChanged)="seasonalitySaleEvent($event)">
+          </an-seasonality-sale>
+        </div>
+
+        <div class="text-center">
           <br><br>
           <button mat-raised-button matStepperPrevious type="button" color="primary">Anterior</button> &nbsp;
           <button mat-raised-button matStepperNext type="button" color="primary">Siguiente</button>

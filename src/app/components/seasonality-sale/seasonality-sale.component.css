@@ -1,0 +1,32 @@
+/* Seasonality low */
+.seasonality-B {
+    background: rgb(250, 70, 70);
+    color: #FFF;
+    margin: 3px;
+}
+
+/* Seasonality middle */
+.seasonality-M {
+    background: rgb(250, 238, 70);
+    color: #666;
+    margin: 3px;
+}
+
+/* Seasonality high */
+.seasonality-A {
+    background: rgb(70, 250, 94);
+    color: #FFF;
+    margin: 3px;
+}
+
+.label-seasonality {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.text-label-seasonality {
+    font-size: 8px;
+    height: 30px;
+}
