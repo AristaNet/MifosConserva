@@ -20,11 +20,11 @@ import {
 } from '@angular/material';
 
 // Custom Modules
-import { ChipsPhonesModule } from '../../../components/chips-phones/chips-phones.module';
-import { SeasonalitySaleModule } from '../../../components/seasonality-sale/seasonality-sale.module';
+import { ChipsPhonesModule } from '@components/chips-phones/chips-phones.module';
+import { SeasonalitySaleModule } from '@components/seasonality-sale/seasonality-sale.module';
 
 // Pipes
-import { ErrorMessageModule } from '../../../pipes/error-message/error-message.module';
+import { ErrorMessageModule } from '@pipes/error-message/error-message.module';
 
 // Components
 import { FormClientComponent } from './form-client.component';

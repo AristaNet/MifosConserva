@@ -16,6 +16,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@interfaces/*": ["src/app/interfaces/*"],
+      "@components/*": ["src/app/components/*"],
+      "@services/*": ["src/app/services/*"],
+      "@pipes/*": ["src/app/pipes/*"],
+      "@sources/*": ["src/app/sources/*"]
+    }
   }
 }

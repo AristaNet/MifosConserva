@@ -23,7 +23,7 @@ export class SeasonalitySaleComponent implements OnInit {
    * It contains the states of the seasonlity
    */
 
-  private seasonalityState: SeasonalityState[] = [
+  public seasonalityState: SeasonalityState[] = [
     new SeasonalityState('B', 'Baja'),
     new SeasonalityState('M', 'Media'),
     new SeasonalityState('A', 'Alta')

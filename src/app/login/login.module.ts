@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginRoutingModule } from './login-routing.module';
 
 // pipes
-import { ErrorMessageModule } from '../pipes/error-message/error-message.module';
+import { ErrorMessageModule } from '@pipes/error-message/error-message.module';
 
 // Components
 import { LoginComponent } from './login.component';

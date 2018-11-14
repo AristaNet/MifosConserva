@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonValidators } from 'ng-validator';
-import { errorMessage } from '../sources/formErrorMessage';
+import { errorMessage } from '@sources/formErrorMessage';
+import { AuthService } from '@services/auth/auth.service';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 
 /**
  * Component class that manages the login page
@@ -39,15 +41,25 @@ export class LoginComponent implements OnInit {
 
   public errorDict: any = errorMessage;
 
+  /**
+   * 
+   * @param fb
+   * @param router 
+   * @param authSrv 
+   * @param ls 
+   */
+
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authSrv: AuthService,
+    private ls: LocalStorageService
   ) {
 
     // it creates the form if the login
     this.loginForm = this.fb.group({
-      email: ['', [ Validators.required, CommonValidators.isEmail ]],
-      password: ['', Validators.required]
+      email: ['mi@correo.com', [ Validators.required, CommonValidators.isEmail ]],
+      password: ['123', Validators.required]
     });
 
   }
@@ -57,16 +69,30 @@ export class LoginComponent implements OnInit {
    */
 
   public login(): void {
-    if (this.loginForm.invalid) return;
 
-    console.log(this.loginForm.value);
+    if (this.loginForm.invalid) return;
 
     this.isLogin = true;
 
-    setTimeout(() => {
-      this.isLogin = false; 
-      this.router.navigate(['']);
-    }, 2000);
+    this.authSrv.login( this.loginForm.value ).subscribe( 
+      res => {
+        
+        if (res.token) {
+          this.ls.setToken( res.token );
+          this.ls.setUser( res.user );
+          this.ls.setModules( res.modules );
+          this.router.navigate(['']);
+        }
+
+        this.isLogin = false;
+
+      }, 
+      
+      err => {
+        this.isLogin = false;
+      }
+    );
+
   }
 
   /**
