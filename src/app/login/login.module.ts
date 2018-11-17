@@ -12,13 +12,16 @@ import { ErrorMessageModule } from '@pipes/error-message/error-message.module';
 // Components
 import { LoginComponent } from './login.component';
 
+// modules
+import { SimpleAlertModule } from '@modals/simple-alert/simple-alert.module';
+
 // Angular material
 import { 
   MatFormFieldModule, 
   MatInputModule, 
   MatButtonModule, 
   MatIconModule, 
-  MatProgressBarModule 
+  MatProgressBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -32,7 +35,8 @@ import {
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    SimpleAlertModule
   ],
   declarations: [
     LoginComponent

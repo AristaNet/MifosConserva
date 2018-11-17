@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+  {{ data.title }}
+</h1>
+
+<mat-dialog-content>
+  {{ data.message }}
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close *ngIf="data.cancellable">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Aceptar</button>
+</mat-dialog-actions>
+

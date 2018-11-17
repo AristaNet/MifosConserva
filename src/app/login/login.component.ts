@@ -5,6 +5,8 @@ import { CommonValidators } from 'ng-validator';
 import { errorMessage } from '@sources/formErrorMessage';
 import { AuthService } from '@services/auth/auth.service';
 import { LocalStorageService } from '@services/local-storage/local-storage.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SimpleAlertComponent } from '@modals/simple-alert/simple-alert.component';
 
 /**
  * Component class that manages the login page
@@ -46,14 +48,16 @@ export class LoginComponent implements OnInit {
    * @param fb
    * @param router 
    * @param authSrv 
-   * @param ls 
+   * @param ls
+   * @param dialog
    */
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authSrv: AuthService,
-    private ls: LocalStorageService
+    private ls: LocalStorageService,
+    private dialog: MatDialog
   ) {
 
     // it creates the form if the login
@@ -90,9 +94,24 @@ export class LoginComponent implements OnInit {
       
       err => {
         this.isLogin = false;
+        console.log(err);
+        this.showSimpleDialog( 'No pudo iniciar sesión', err.message );
       }
     );
 
+  }
+
+  /**
+   * 
+   * @param title Title of the dialog
+   * @param message Message of the dialog
+   * @returns returns the dialog instances
+   */
+
+  private showSimpleDialog(title: string, message: string = 'Error desconocido'): MatDialogRef<SimpleAlertComponent> {
+    return this.dialog.open( SimpleAlertComponent , {
+      data: { title, message }
+    });
   }
 
   /**
