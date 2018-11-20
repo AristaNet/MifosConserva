@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonValidators } from 'ng-validator';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { errorMessage } from '@sources/formErrorMessage';
 import { RGX } from '@sources/regex';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { SeasonalitySale } from '@components/seasonality-sale/seasonality-sale';
@@ -26,13 +25,12 @@ export class FormClientComponent implements OnInit {
    */
 
   public formClient: FormGroup;
-
+  
   /**
-   * It has a dictionary of the errors messages for the inputs 
+   * 
+   * @param fb 
    */
-
-  public errorDict: any = errorMessage;
-
+  
   constructor(
     private fb: FormBuilder
   ) { }

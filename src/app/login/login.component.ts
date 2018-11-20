@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonValidators } from 'ng-validator';
-import { errorMessage } from '@sources/formErrorMessage';
 import { AuthService } from '@services/auth/auth.service';
 import { LocalStorageService } from '@services/local-storage/local-storage.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -36,12 +35,6 @@ export class LoginComponent implements OnInit {
    */
 
   public isShowingPassword: boolean = false;
-
-  /**
-   * It contains the error messages dictionary for the inputs
-   */
-
-  public errorDict: any = errorMessage;
 
   /**
    * 

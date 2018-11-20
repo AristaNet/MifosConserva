@@ -10,7 +10,7 @@
         <mat-label>Correo electrónico</mat-label>
         <input matInput type="text" placeholder="ejemplo: correo@email.com" formControlName="email" required>
         <mat-error *ngIf="loginForm.get('email').invalid">
-          {{ loginForm.get('email').errors | errorMessage: errorDict }}
+          {{ loginForm.get('email').errors | errorMessage }}
         </mat-error>
       </mat-form-field>
       
@@ -23,7 +23,7 @@
             <mat-icon>{{ isShowingPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         <mat-error *ngIf="loginForm.get('password').invalid">
-          {{ loginForm.get('password').errors | errorMessage: errorDict }}
+          {{ loginForm.get('password').errors | errorMessage }}
         </mat-error>
       </mat-form-field>
   

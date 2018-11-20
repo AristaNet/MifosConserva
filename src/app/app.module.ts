@@ -6,6 +6,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Interceptors
 import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
 
+// Dictionaries
+import { errorMessage } from '@sources/formErrorMessage';
+
+// modules
+import { ErrorMessageModule } from '@pipes/error-message/error-message.module';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -17,7 +24,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ErrorMessageModule.forRoot( errorMessage )
   ],
   providers: [
     {
