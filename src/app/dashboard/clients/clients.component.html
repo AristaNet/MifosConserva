@@ -3,3 +3,16 @@
 </p>
 <a routerLink="create">Crear cliente</a>
 <a routerLink="/login">Login</a>
+
+
+<button *anHasPermission="[ 'clients', 'CREATE' ]">
+  Permiso CREATE
+</button>
+
+<button *anHasPermission="[ 'clients', 'READ' ]">
+  Permiso READ
+</button>
+
+<button *anHasPermission="[ 'clients', 'EDIT' ]">
+  Permiso EDIT
+</button>

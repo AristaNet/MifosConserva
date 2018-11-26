@@ -1,9 +1,10 @@
 import { ErrorMessagePipe } from './error-message.pipe';
+import { TestBed, inject } from '@angular/core/testing';
+import { ErrorMessageService } from './error-message.service';
 
 describe('ErrorMessagePipe', () => {
 
-  // it instances the pipe
-  const pipe = new ErrorMessagePipe();
+  let pipe: ErrorMessagePipe;
 
   // Dictionary of errors
   const errorDict = {
@@ -11,47 +12,56 @@ describe('ErrorMessagePipe', () => {
     maxlength: 'Maxlength testing with {*} examples of {*}'
   };
 
-  it('create an instance', () => {
-    expect(pipe).toBeTruthy();
+  beforeEach(() => {
+
+    TestBed.configureTestingModule({
+      providers: [ 
+        { provide: ErrorMessageService, useValue: errorDict }
+      ]
+    });
+
   });
+
+  it('create an instance with dependency', inject([ ErrorMessageService ], (errorMessageSrv: ErrorMessageService) => {
+    pipe = new ErrorMessagePipe( errorMessageSrv );
+    console.warn('PIPE:', pipe);
+
+    expect(pipe).toBeTruthy();
+  }));
 
   it('maxlength: Two {*} in the string', () => {
-    expect( pipe.transform({ maxlength: true }, errorDict, { maxlength: [2, 'parameters']  }) ).toBe('Maxlength testing with 2 examples of parameters');
+    expect( pipe.transform({ maxlength: true }, { maxlength: [2, 'parameters'] }) ).toBe('Maxlength testing with 2 examples of parameters');
   });
 
-  it('maxlength: Two {*} in the string with bad param array', () => {
-    expect( pipe.transform({ maxlength: true }, errorDict, { maxlength: 2  }) ).toBe('Maxlength testing with {*} examples of {*}');
+  it('maxlength: Two {*} in the string with one bad array param', () => {
+    expect( pipe.transform({ maxlength: true }, { maxlength: 2  }) ).toBe('Maxlength testing with {*} examples of {*}');
   });
 
-  it('required testing', () => {
-    expect( pipe.transform({ required: true }, errorDict) ).toBe('Required testing');
+  it('required test', () => {
+    expect( pipe.transform({ required: true })).toBe('Required testing');
   });
 
-  it('required testing with params', () => {
-    expect( pipe.transform({ required: true }, errorDict, { maxlength: [50]}) ).toBe('Required testing');
+  it('required test with params but they do not necessary', () => {
+    expect( pipe.transform({ required: true }, { required: [50]}) ).toBe('Required testing');
   });
 
   it('required testing with empty param', () => {
-    expect( pipe.transform({ required: true }, errorDict, {}) ).toBe('Required testing');
+    expect( pipe.transform({ required: true }, {}) ).toBe('Required testing');
   });
 
   it('required testing with param and bad array on the property', () => {
-    expect( pipe.transform({ required: true }, errorDict, { required: 10 }) ).toBe('Required testing');
+    expect( pipe.transform({ required: true }, { required: 10 }) ).toBe('Required testing');
   });
 
-  it('without erros', () => {
-    expect( pipe.transform({}, errorDict) ).toBe('');
+  it('without errors', () => {
+    expect( pipe.transform({}) ).toBe(null);
   });
 
-  it('bad error', () => {
+  it('argument errors is not an object', () => {
     expect( pipe.transform('hola', {}) ).toBe(null);
   });
 
-  it('without dictionary', () => {
-    expect( pipe.transform({}, {}) ).toBe('');
-  });
-
-  it('bad dictionary', () => {
+  it('bad options', () => {
     expect( pipe.transform({}, 12) ).toBe(null);
   });
 

@@ -69,12 +69,13 @@ import { ErrorMessageService } from './error-message.service';
 })
 export class ErrorMessagePipe implements PipeTransform {
 
-
+  /**
+   * @param dictErrors 
+   */
+  
   constructor(
     private dictErrors: ErrorMessageService
-  ) {
-    console.log('PIPE ERROR MESSAGE CHARGED:', this.dictErrors);
-  }
+  ) {}
 
   /**
    * Pipe for getting messages of errors of the form fields
@@ -87,13 +88,13 @@ export class ErrorMessagePipe implements PipeTransform {
   transform(value: any, opts: any = {}): string {
 
     // it checks that the inputs 
-    if ((typeof value != 'object') || Array.isArray(value)) return null;
+    if (typeof value !== 'object' || Array.isArray(value) || typeof opts != 'object') return null;
 
     // it gets the key
     const regex: RegExp = /{\*}/;
     const errKey: string = Object.keys( value )[ 0 ]; // required
     const valuesReplace: any[] = opts[ errKey ];
-    let msg: string = errKey ? this.dictErrors[ errKey ] : '';
+    let msg: string = errKey ? this.dictErrors[ errKey ] : null;
     
 
     if (Array.isArray( valuesReplace )) {
