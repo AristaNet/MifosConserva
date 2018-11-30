@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { SeasonalitySale } from './seasonality-sale';
 import { SeasonalityState } from './seasonality-state';
 
@@ -11,7 +11,7 @@ import { SeasonalityState } from './seasonality-state';
   templateUrl: './seasonality-sale.component.html',
   styleUrls: ['./seasonality-sale.component.css']
 })
-export class SeasonalitySaleComponent implements OnInit {
+export class SeasonalitySaleComponent implements OnChanges {
 
   /**
    * Event when the states change and emites the months array
@@ -52,8 +52,7 @@ export class SeasonalitySaleComponent implements OnInit {
     this.stateChanged.emit( this.months );
   }
 
-  ngOnInit() {
-
+  ngOnChanges() {
     // If the months property doesn't has data, assign data
     if (this.months && !this.months.length) {
       this.months = [

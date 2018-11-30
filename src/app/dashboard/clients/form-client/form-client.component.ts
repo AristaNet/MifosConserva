@@ -320,9 +320,15 @@ export class FormClientComponent implements OnInit {
       }
 
     } else {
+
+      // It gets a seasonality clone and creates a new arrayForm to prevent that it will be reseted
+      const seasonality = this.fb.array( [ ...this.formBussinessData.get('seasonality').value || [] ] );
+
       this.formBussinessData.reset();
+
       // it's necesary replace the phones property, because the reset() methods only clean the data
       this.formBussinessData.setControl('phones', this.fb.array([], Validators.required));
+      this.formBussinessData.setControl('seasonality', seasonality);
     }
 
   }
